@@ -1,0 +1,15 @@
+{% extends 'games/base.html' %}
+
+{% block title %}Publishers{% endblock %}
+{% block header %}Publishers{% endblock %}
+
+{% block content %}
+    {% if publishers %}
+        <ul>
+        {% for publisher in publishers %}
+            <li><a href="/games/publisher/{{ publisher.slug }}">{{ publisher.name }}</a> ({{ publisher.games | length }} games)</li>
+        {% endfor %}
+    {% else %}
+       Error: no publishers found.
+    {% endif %}
+{% endblock %}

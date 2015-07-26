@@ -1,0 +1,56 @@
+{% extends 'bootstrap3/bootstrap3.html' %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+
+{% block bootstrap3_title %}{% block title %}{% endblock %}{% endblock %}
+
+{% block bootstrap3_extra_head %}
+    <link href="{% static 'games/styles.css' %}" rel="stylesheet" />
+    <!--
+        <script type="text/javascript">
+            window.onload = function () {
+                var p_element = document.getElementById('game-description');
+                var unixNewLine = new RegExp("\n", "g");
+                p_element.innerHTML = p_element.innerHTML.replace(unixNewLine, '<br/>');
+            }
+        </script>
+    -->
+{% endblock %}
+
+{% block bootstrap3_content %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <span class="navbar-brand project-name">Game Library</span>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{% url 'index_games' %}">Games</a></li>
+                    <li><a href="{% url 'index_publishers' %}">Publishers</a>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/admin" target="_new">Admin</a></li>
+                    <li><a href="{% url 'about' %}">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    {% bootstrap_messages %}
+    
+    <div id="container">
+        <div class="page-content">
+	        <div class="page-header">
+	            <h1>{% block header %}{% endblock %}</h1>
+	        </div>
+	        
+	        {% block content %}{% endblock %}
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <div class="container">
+            <p class="text-muted"><small>Copyright &copy; 2015 Ross Nelson.</small>
+        </div>
+    </footer>
+{% endblock %}

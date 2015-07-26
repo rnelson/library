@@ -1,0 +1,25 @@
+{% extends 'games/base.html' %}
+
+{% block title %}{{ game.name }}{% endblock %}
+{% block header %}{{ game.name }}{% endblock %}
+
+{% block content %}
+    {% if game %}
+        {% if game.image_url %}
+            <img src="{{ game.image_url }}" alt="Image for {{ game.name }}" class="game-image" />
+        {% endif %}
+        
+        Name: {{ game.name }}<br>
+        {% if game.description %}Description: <div id="game-description">{{ game.description | linebreaksbr }}</div>{% endif %}
+		Players: {{ game.players }}<br>
+		Time: {{ game.time }}<br>
+		Publisher: <a href="/games/publisher/{{ game.publisher.slug }}">{{ game.publisher.name }}</a><br>
+		Websites:
+		<ul>
+		  {% if game.bgg_url %}<li><a href="{{ game.bgg_url }}">{{ game.name }} at BoardGameGeek</a></li>{% endif %}
+		  {% if game.publisher.bgg_url %}<li><a href="{{ game.publisher.bgg_url }}">{{ game.publisher.name }} at BoardGameGeek</a></li>{% endif %}
+		</ul>
+	{% else %}
+	   Game not found.
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'games/base.html' %}
+
+{% block title %}Games{% endblock %}
+{% block header %}Games{% endblock %}
+
+{% block content %}
+    {% if games %}
+        <ul>
+        {% for game in games %}
+            <li><a href="/games/{{ game.slug }}">{{ game.name }}</a></li>
+        {% endfor %}
+    {% else %}
+       Error: no games found.
+    {% endif %}
+{% endblock %}

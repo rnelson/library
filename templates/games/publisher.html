@@ -1,0 +1,30 @@
+{% extends 'games/base.html' %}
+
+{% block title %}{{ publisher.name }}{% endblock %}
+{% block header %}{{ publisher.name }}{% endblock %}
+
+{% block content %}
+    {% if publisher %}
+        {% if publisher.image_url %}
+            <img src="{{ publisher.image_url }}" alt="Image for {{ publisher.name }}" class="publisher-image" />
+        {% endif %}
+        
+        {% if publisher.country %}
+            Country: {{ publisher.country }}<br>
+        {% endif %}
+        {% if publisher.url %}
+            Website: <a href="{{ publisher.url }}">{{ publisher.url }}</a><br>
+        {% endif %}
+        
+        {% if games %}
+            <h3>Games</h3>
+            <ul>
+            {% for game in games %}
+                <li><a href="/games/{{ game.slug }}">{{ game.name }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% else %}
+       Publisher not found.
+    {% endif %}
+{% endblock %}
