@@ -9,16 +9,22 @@
             <img src="{{ game.image_url }}" alt="Image for {{ game.name }}" class="game-image" />
         {% endif %}
         
+        <h3>Information</h3>
         Name: {{ game.name }}<br>
         {% if game.description %}Description: <div id="game-description">{{ game.description | linebreaksbr }}</div>{% endif %}
 		Players: {{ game.players }}<br>
 		Time: {{ game.time }}<br>
 		Publisher: <a href="/games/publisher/{{ game.publisher.slug }}">{{ game.publisher.name }}</a><br>
-		Websites:
-		<ul>
-		  {% if game.bgg_url %}<li><a href="{{ game.bgg_url }}">{{ game.name }} at BoardGameGeek</a></li>{% endif %}
-		  {% if game.publisher.bgg_url %}<li><a href="{{ game.publisher.bgg_url }}">{{ game.publisher.name }} at BoardGameGeek</a></li>{% endif %}
-		</ul>
+
+        
+        {% if game.links %}
+            <h3>Websites</h3>
+            <ul>
+            {% for link in game.links %}
+                <li><a href="{{ link.url }}">{{ link.name }}</a></li>
+            {% endfor %}
+            </ul>
+        {% endif %}
 	{% else %}
 	   Game not found.
 	{% endif %}

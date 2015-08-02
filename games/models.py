@@ -1,6 +1,26 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
+from libxml2mod import properties
+
+
+@python_2_unicode_compatible
+class Link(models.Model):
+    name = models.CharField(max_length=255)
+    url = models.URLField()
+    publisher = models.ForeignKey('Publisher', blank=True, null=True)
+    game = models.ForeignKey('Game', blank=True, null=True)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        if self.publisher:
+            return self.publisher.name + ' > ' + self.name
+        elif self.game:
+            return self.game.name + ' > ' + self.name
+        else:
+            return '(empty link)'
 
 
 @python_2_unicode_compatible
@@ -8,9 +28,7 @@ class Publisher(models.Model):
     slug = models.SlugField()
     name = models.CharField(max_length=255)
     country = models.CharField(max_length=2, blank=True, null=True)
-    url = models.URLField(blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
-    bgg_url = models.URLField(blank=True, null=True)
     
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -21,6 +39,10 @@ class Publisher(models.Model):
     @property
     def games(self):
         return Game.objects.filter(publisher=self)
+    
+    @property
+    def links(self):
+        return Link.objects.filter(publisher=self)
 
 
 @python_2_unicode_compatible
@@ -28,9 +50,7 @@ class Game(models.Model):
     slug = models.SlugField()
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
-    url = models.URLField(blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
-    bgg_url = models.URLField(blank=True, null=True)
     
     min_players = models.IntegerField(blank=True, null=True)
     max_players = models.IntegerField(blank=True, null=True)
@@ -44,6 +64,10 @@ class Game(models.Model):
     
     def __str__(self):
         return self.name
+    
+    @property
+    def links(self):
+        return Link.objects.filter(game=self)
     
     @property
     def players(self):
