@@ -15,8 +15,9 @@ does what I need well enough.
 
 ## Development
 
-Once you've cloned this repo, simply run `python manage.py runserver` and you 
-can access your local instance. The database will be a local SQLite file.
+Once you've cloned this repo, simply run `python manage.py migrate`, 
+`python manage.py createsuperuser`, and finally `python manage.py runserver` to 
+set up a local instance. The database will be a local SQLite file.
 
 ## Production
 
