@@ -3,7 +3,6 @@ from django.shortcuts import get_object_or_404, render_to_response
 from games.models import Game, Publisher
 from django.template.context import RequestContext
 from django.utils import formats
-from datetime import datetime
 
 
 # Create your views here.
