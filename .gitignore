@@ -181,3 +181,6 @@ local.properties
 
 # Database
 db.sqlite3
+
+# Settings
+library/override_settings.py
