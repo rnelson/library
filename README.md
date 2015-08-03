@@ -41,6 +41,8 @@ bind = '127.0.0.1:8001'
 workers = 3
 ```
 
+I bind to port 8001 because [the site sits behind nginx](https://www.digitalocean.com/community/tutorials/how-to-deploy-a-local-django-app-to-a-vps#step-four-configure-your-vps).
+
 You will also need an `override_settings.py` file (lives in `app/library/settings`, 
 but I created a symlink there to a file outside of the repo so I can re-clone 
 later if needed). Here's an example:
