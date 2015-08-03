@@ -12,10 +12,10 @@
         <h3>Information</h3>
         Name: {{ game.name }}<br>
         {% if game.description %}Description: <div id="game-description">{{ game.description | linebreaksbr }}</div>{% endif %}
-		Players: {{ game.players }}<br>
-		Time: {{ game.time }}<br>
-		Publisher: <a href="/games/publisher/{{ game.publisher.slug }}">{{ game.publisher.name }}</a><br>
-
+        Players: {{ game.players }}<br>
+        Time: {{ game.time }}<br>
+        Publisher: <a href="/games/publisher/{{ game.publisher.slug }}">{{ game.publisher.name }}</a><br>
+        Added: {{ added_date }}<br>
         
         {% if game.links %}
             <h3>Websites</h3>
