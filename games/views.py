@@ -18,7 +18,7 @@ def about(request):
 
 
 def publishers(request):
-    publishers = Publisher.objects.all().order_by('-updated_at')
+    publishers = Publisher.objects.all().order_by('name')
     context = RequestContext(request)
     return render_to_response('games/index_publishers.html', {'publishers': publishers}, context)
 
