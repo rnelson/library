@@ -23,5 +23,4 @@ urlpatterns = [
     url(r'^/?$', game_views.index),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^games/', include(games_urls)),
-    #(r'^tinymce/', include('tinymce.urls')),
 ]
