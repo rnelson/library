@@ -15,26 +15,8 @@ does what I need well enough.
 
 ## Development
 
-Once you've cloned this repo, create a new file `library/override_settings.py`. 
-This file, if it exists, will be loaded by the standard settings file and is 
-used to override other settings.
-
-At present, the default settings are tailored to production rather than 
-development (I'll fix that at some point), so you'll need to fix static files 
-using `override_settings.py`:
-
-```
-from library.settings import BASE_DIR
-import os
-
-STATIC_ROOT = ''
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-```
-
-Once that's done, simply run `python manage.py runserver` and you can access 
-your local instance.
+Once you've cloned this repo, simply run `python manage.py runserver` and you 
+can access your local instance. The database will be a local SQLite file.
 
 ## Production
 
@@ -45,7 +27,10 @@ This is a shortened version of what I did to deploy.
 3. `source /srv/library/env/bin/activate`
 4. `git clone (url) /srv/library/app`
 5. `(cd /srv/library/app && pip install -r requirements.txt)`
-6. `/srv/library/env/bin/gunicorn -c /srv/library/gunicorn_config.py library.wsgi:application`
+6. (`override_settings` and database stuff; see below)
+7. `python manage.py migrate`
+8. `python manage.py createsuperuser`
+9. `/srv/library/env/bin/gunicorn -c /srv/library/gunicorn_config.py library.wsgi:application`
 
 My `/srv/library/gunicorn_config.py` looks like this:
 
@@ -55,6 +40,39 @@ pythonpath = '/srv/library/app'
 bind = '127.0.0.1:8001'
 workers = 3
 ```
+
+You will also need an `override_settings.py` file (lives in `app/library/settings`, 
+but I created a symlink there to a file outside of the repo so I can re-clone 
+later if needed). Here's an example:
+
+```
+import os
+from library.settings import BASE_DIR
+
+SECRET_KEY = 'my super secret key that differs from development'
+DEBUG = False
+ALLOWED_HOSTS = ['*']
+
+STATICFILES_DIRS = []
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'mylibrary',
+        'USER': 'mylibraryuser',
+        'PASSWORD': 'mylibrarypass',
+        'HOST': 'localhost',
+        'POST': '',
+    }
+}
+```
+
+Obviously, set a secret key that is actually a secret and configure the 
+database to your liking. I run PostgreSQL on the machine so I simply created a 
+user and a database owned by that user and the migration set everything up for 
+me. You can use any database backend that is supported, or simply don't touch 
+`DATABASES` to continue using a SQLite file on the filesystem.
 
 ## License
 
