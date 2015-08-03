@@ -110,3 +110,10 @@ STATICFILES_DIRS = [
 BOOTSTRAP3 = {
         'include_jquery': True
 }
+
+# Import any local settings if present
+try:
+    from library.override_settings import *
+except ImportError:
+    pass
+
