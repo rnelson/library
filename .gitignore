@@ -184,3 +184,8 @@ db.sqlite3
 
 # Settings
 library/override_settings.py
+
+# Static files (python manage.py collectstatic)
+static/admin
+static/bootstrap
+static/bootstrap-rtl
